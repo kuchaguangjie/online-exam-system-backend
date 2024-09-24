@@ -4,7 +4,7 @@ dataSources:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     jdbcUrl: jdbc:mysql://127.0.0.1:9601/db_exam
     username: root
-    password: root
+    password: 123456
     druid:
       # 初始化时建立物理连接的个数
       initial-size: 5

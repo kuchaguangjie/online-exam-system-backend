@@ -2,9 +2,9 @@ dataSources:
   ds_1:
     driverClassName: com.mysql.cj.jdbc.Driver
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
-    jdbcUrl: jdbc:mysql://172.20.0.4:3306/db_exam
+    jdbcUrl: jdbc:mysql://localhost:3306/db_exam
     username: root
-    password: root
+    password: 123456
     druid:
       # 初始化时建立物理连接的个数
       initial-size: 5
