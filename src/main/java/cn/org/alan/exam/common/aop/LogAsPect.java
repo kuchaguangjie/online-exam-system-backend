@@ -1,5 +1,10 @@
 package cn.org.alan.exam.common.aop;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -7,23 +12,16 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
-
-import cn.hutool.core.util.RandomUtil;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.PropertyPreFilters;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ * logging api request,
+ *
  * @Author Alan
  * @Version
  * @Date 2024/5/13 2:33 PM
@@ -34,11 +32,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class LogAsPect {
 
     private final static Logger LOG = LoggerFactory.getLogger(LogAsPect.class);
+
     // @Around("execution(* cn.org.alan.exam.controller..*.*(..))")
     @Pointcut("execution(public * cn.org.alan.exam.controller..*Controller.*(..))")
-    public void controllerPointcut() {}
-
-
+    public void controllerPointcut() {
+    }
 
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
@@ -54,7 +52,7 @@ public class LogAsPect {
         LOG.info("远程地址: {}", request.getRemoteAddr());
 
         Object[] args = joinPoint.getArgs();
-        Object[] arguments  = new Object[args.length];
+        Object[] arguments = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof ServletRequest
                     || args[i] instanceof ServletResponse
@@ -84,5 +82,4 @@ public class LogAsPect {
         LOG.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
         return result;
     }
-
 }
